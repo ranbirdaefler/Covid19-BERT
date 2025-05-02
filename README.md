@@ -110,3 +110,13 @@ Confusion Matrix:
  [   27     1     2  1671     2     4]
  [   19     1     8     0   159     5]
  [   58     5    95     5     4   816]]
+
+
+
+
+
+ ![pre-fine-tune-cls png](https://github.com/user-attachments/assets/b8a0c27f-c6c4-4e55-8133-66b64a902f93)
+![pca_prefinetune_diff](https://github.com/user-attachments/assets/9ad8878a-15ed-460a-8c06-4e6802fc8b0b)
+![pca_finetunecls](https://github.com/user-attachments/assets/9849321d-5199-42b4-a562-8f2d674ea20f)
+![pca_finetune_diff](https://github.com/user-attachments/assets/cf2f0a4c-036c-4b7f-bc41-ce3253437deb)
+
