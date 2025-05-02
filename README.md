@@ -119,4 +119,5 @@ Confusion Matrix:
 ![pca_prefinetune_diff](https://github.com/user-attachments/assets/9ad8878a-15ed-460a-8c06-4e6802fc8b0b)
 ![pca_finetunecls](https://github.com/user-attachments/assets/9849321d-5199-42b4-a562-8f2d674ea20f)
 ![pca_finetune_diff](https://github.com/user-attachments/assets/cf2f0a4c-036c-4b7f-bc41-ce3253437deb)
+![234](https://github.com/user-attachments/assets/2475090d-bbc3-4865-bf49-b619021d3f0c)
 
