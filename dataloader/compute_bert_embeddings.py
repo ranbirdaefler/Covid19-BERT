@@ -1,19 +1,6 @@
 
-#!/usr/bin/env python
-"""
-reembed_protbert_gpu.py
------------------------
-Re-compute ProtBERT Δ-embeddings in the exact DataFrame order
-so they align 1 : 1 with positional_vectors.npy.
-
-Requires a CUDA-enabled GPU with ≥16 GB VRAM.
-Outputs:
-  bert_full_X.npy   # (N, 768) float32
-  bert_full_y.npy   # (N,)      str
-"""
-
 # ------------------------------------------------------------------ #
-# 1  Paths (edit these)
+# 1  Paths (EDIT THESE TO POINT TO THE FOLDER CONTAINING THE .FASTA FILES FOR DATA_DIR AND THE REFERENCE WUHAN VIRUS PATH FOR REF_FP)
 # ------------------------------------------------------------------ #
 DATA_DIR = r"C:\Users\avsd8\OneDrive\Desktop\covid19\project\data"
 REF_FP   = r"C:\Users\avsd8\OneDrive\Desktop\covid19\project\data\reference.fasta"
@@ -58,14 +45,11 @@ tokenizer = BertTokenizer.from_pretrained("Rostlab/prot_bert", do_lower_case=Fal
 model = BertModel.from_pretrained("Rostlab/prot_bert").to(device)
 model.eval()
 
-hidden = model.config.hidden_size      # ← adapts automatically
+hidden = model.config.hidden_size   
 print(f"Hidden size = {hidden}")
 emb = np.empty((N, hidden), dtype=np.float32)
 
 def prep(seq): return " ".join(list(seq[:1273]))  # truncate >1273 aa
-# --------------------------------------------------
-# 6  Embed  (replace the loop body)
-# ------------------------------------------------------------------ #
 # 6  Embed
 # ------------------------------------------------------------------ #
 
