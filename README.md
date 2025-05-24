@@ -1,123 +1,144 @@
-These are trhe results: 
-Evaluating on Validation Set...
+# Evaluating Protein Language Models Against Traditional and Positional Features for SARS-CoV-2 Variant Classification
 
-=== BERT XGBoost on Validation Set ===
-Accuracy: 0.9860
+This repository contains code and resources for the project:
 
-Classification Report:
+> **Evaluating Protein Language Models Against Traditional and Positional Features for SARS-CoV-2 Variant Classification**  
+> *Florian Ranbir Vaid Daelfer, Emilija Milanovic, Changchen Yu*  
+> Bocconi University Deep Learning and Reinforcement Learning
 
-              precision    recall  f1-score   support
+## Overview
 
-           0     0.9919    0.9965    0.9942     19101
-           1     0.9897    0.9438    0.9662       409
-           2     0.9725    0.9728    0.9727      3711
-           3     0.9858    0.9731    0.9794      1707
-           4     0.9724    0.9119    0.9412       193
-           5     0.9206    0.8850    0.9025       983
+This project systematically compares three approaches to representing SARS-CoV-2 spike protein sequences for the task of variant classification:
 
-    accuracy                         0.9860     26104
-   macro avg     0.9722    0.9472    0.9593     26104
-weighted avg     0.9859    0.9860    0.9859     26104
+1. **AAindex Aggregate Features**: Simple 6-dimensional vectors summarizing global hydrophobicity changes.
+2. **AAindex Positional Features**: 1273-dimensional vectors capturing site-specific hydrophobicity mutations.
+3. **ProtBERT CLS Embeddings**: High-dimensional learned representations from the [Rostlab/prot_bert](https://huggingface.co/Rostlab/prot_bert) protein language model, differenced against the Wuhan reference.
 
-Confusion Matrix:
+All approaches are evaluated on a large, diverse dataset of 261,042 spike protein sequences spanning six WHO lineages, using XGBoost classifiers with method-specific hyperparameter optimization and rigorous cross-validation.
 
-[[19035     1    32     5     0    28]
- [   13   386     6     3     0     1]
- [   55     0  3610    10     2    34]
- [   21     1    15  1661     0     9]
- [    7     0     5     2   176     3]
- [   60     2    44     4     3   870]]
+## Key Findings
 
-=== Static XGBoost on Validation Set ===
-Accuracy: 0.9794
+- **Positional encoding of mutations** outperforms both simple baselines and ProtBERT embeddings, achieving the highest macro-F1 (0.967) and accuracy (99.0%).
+- **ProtBERT embeddings** significantly outperform the simple baseline, offering a strong "off-the-shelf" solution with minimal domain expertise required.
+- **Carefully engineered features** still provide meaningful performance gains, especially for minority variant detection, despite advances in protein language models.
 
-Classification Report:
+## Dataset
 
-              precision    recall  f1-score   support
+- **Source**: [Kaggle SARS-CoV-2 Spike Protein Sequences](https://www.kaggle.com/datasets/edumath/sars-cov-2-spike-sequences) (mirroring GISAID records).
+- **Classes**: Alpha, Beta, Gamma, Delta, Omicron, Others (catch-all).
+- **Sequence length**: All sequences are aligned to the Wuhan reference (NCBI accession YP_009724390.1).
+- **Ambiguity Handling**: Non-standard residues (X, B, Z, J) are ignored during feature computation.
 
-           0     0.9891    0.9945    0.9918     19101
-           1     0.9282    0.9169    0.9225       409
-           2     0.9558    0.9617    0.9588      3711
-           3     0.9905    0.9777    0.9841      1707
-           4     0.8919    0.8549    0.8730       193
-           5     0.8900    0.8067    0.8463       983
+## Feature Extraction Approaches
 
-    accuracy                         0.9794     26104
-   macro avg     0.9409    0.9187    0.9294     26104
-weighted avg     0.9790    0.9794    0.9791     26104
+### 1. AAindex Aggregate Features (Simple Baseline)
+- Encodes each sequence as a 6D vector of global hydrophobicity change statistics (mean, std, sum, max, min, mutation rate).
+- Based on Kyte–Doolittle hydrophobicity scale.
 
-Confusion Matrix:
+### 2. AAindex Positional Features (Enhanced Baseline)
+- Encodes each sequence as a 1273D vector, with each entry representing the hydrophobicity change at a specific position (mutation or 0).
+- Explicitly preserves the spatial distribution of mutations.
 
-[[18995    21    43     5     5    32]
- [   24   375     1     1     1     7]
- [   90     1  3569     3     2    46]
- [   22     1     9  1669     1     5]
- [   18     0     2     0   165     8]
- [   56     6   110     7    11   793]]
+### 3. ProtBERT Embeddings
+- Uses [ProtBERT](https://huggingface.co/Rostlab/prot_bert), a transformer model pre-trained on >200M protein sequences.
+- Each sequence is tokenized and passed through ProtBERT; the [CLS] token's 1024-dimensional embedding is extracted.
+- Variant embeddings are differenced against the Wuhan reference for stronger signal.
 
-Evaluating on Test Set...
+## Classification Framework
 
-=== BERT XGBoost on Test Set ===
-Accuracy: 0.9855
+- **Model**: XGBoost (multi-class, softprob).
+- **Hyperparameter Optimization**: Per-approach tuning using macro-F1, with 3-fold cross-validation on stratified subsets.
+- **Final Evaluation**: 5-fold stratified cross-validation on the full set (N = 261,042).
+- **Metrics**: Accuracy and macro-F1 (primary). Per-class precision, recall, and F1 are also reported.
 
-Classification Report:
+## Results
 
-              precision    recall  f1-score   support
+| Feature Set                | Accuracy           | Macro-F1           |
+|----------------------------|-------------------|--------------------|
+| **AAindex positional (1273D)** | **0.990 ± 0.0003** | **0.967 ± 0.002**  |
+| ProtBERT Δ-embeddings (1024D)  | 0.987 ± 0.0003     | 0.959 ± 0.002      |
+| AAindex aggregate (6D)         | 0.980 ± 0.0006     | 0.928 ± 0.003      |
 
-           0     0.9917    0.9955    0.9936     19102
-           1     0.9898    0.9439    0.9663       410
-           2     0.9686    0.9722    0.9704      3711
-           3     0.9893    0.9713    0.9802      1707
-           4     0.9775    0.9062    0.9405       192
-           5     0.9198    0.8983    0.9089       983
+- **AAindex positional features** excel, especially in minority variants (Beta, Omicron).
+- **ProtBERT** is a strong, easy-to-deploy baseline, especially useful for "Others" or ambiguous classes.
+- **Aggregate baseline** is outperformed by both, but still achieves high absolute performance.
 
-    accuracy                         0.9855     26105
-   macro avg     0.9728    0.9479    0.9600     26105
-weighted avg     0.9854    0.9855    0.9854     26105
+## Biological Insights
 
-Confusion Matrix:
+- **Variant separation**: WHO lineages form well-separated clusters by both information-theoretic (Jensen–Shannon divergence) and sequence-level (Hamming distance) metrics.
+- **Mutation location matters**: Explicitly encoding where mutations occur yields superior results, showing domain knowledge is still valuable.
+- **Protein language models**: Capture general sequence features and enable rapid, domain-agnostic deployment; further fine-tuning may close the remaining performance gap.
 
-[[19016     0    53     4     0    29]
- [   11   387     4     2     1     5]
- [   59     2  3608     7     2    33]
- [   25     1    15  1658     0     8]
- [   13     1     2     0   174     2]
- [   51     0    43     5     1   883]]
+## Implications
 
-=== Static XGBoost on Test Set ===
-Accuracy: 0.9797
+- **Quick deployment**: ProtBERT embeddings are highly effective for rapid surveillance with minimal setup.
+- **Optimal accuracy**: Invest in positional feature engineering for highest accuracy, especially for rare or emerging variants.
+- **Future work**: Fine-tuning protein language models on targeted viral classification tasks may bridge the performance gap with engineered features.
 
-Classification Report:
+## Usage
 
-              precision    recall  f1-score   support
+### Requirements
 
-           0     0.9892    0.9934    0.9912     19102
-           1     0.9233    0.9098    0.9165       410
-           2     0.9580    0.9652    0.9616      3711
-           3     0.9929    0.9789    0.9858      1707
-           4     0.9191    0.8281    0.8712       192
-           5     0.8841    0.8301    0.8562       983
+- Python 3.8+
+- PyTorch
+- HuggingFace Transformers
+- XGBoost
+- NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn
 
-    accuracy                         0.9797     26105
-   macro avg     0.9444    0.9176    0.9304     26105
-weighted avg     0.9795    0.9797    0.9795     26105
+Install dependencies (example):
+```bash
+pip install torch transformers xgboost numpy pandas scikit-learn matplotlib seaborn
+```
 
-Confusion Matrix:
+### Data
 
-[[18975    24    51     5     4    43]
- [   26   373     1     0     0    10]
- [   78     0  3582     2     4    45]
- [   27     1     2  1671     2     4]
- [   19     1     8     0   159     5]
- [   58     5    95     5     4   816]]
+- Download spike sequences from [Kaggle](https://www.kaggle.com/datasets/edumath/sars-cov-2-spike-sequences) and place in a `data/` directory.
+- The Wuhan reference sequence is available from [NCBI](https://www.ncbi.nlm.nih.gov/protein/YP_009724390.1?report=fasta).
 
+### Running Feature Extraction and Classification
 
+1. **Feature Extraction**:  
+   - `feature_extraction/aggregate_features.py`  
+   - `feature_extraction/positional_features.py`  
+   - `feature_extraction/protbert_embeddings.py`
 
+2. **Classification**:  
+   - `classification/train_xgboost.py` (handles hyperparameter tuning and cross-validation for each feature set)
 
+3. **Analysis and Visualization**:  
+   - `analysis/` contains scripts for exploratory analysis, performance metrics, and generating plots.
 
- ![pre-fine-tune-cls png](https://github.com/user-attachments/assets/b8a0c27f-c6c4-4e55-8133-66b64a902f93)
-![pca_prefinetune_diff](https://github.com/user-attachments/assets/9ad8878a-15ed-460a-8c06-4e6802fc8b0b)
-![pca_finetunecls](https://github.com/user-attachments/assets/9849321d-5199-42b4-a562-8f2d674ea20f)
-![pca_finetune_diff](https://github.com/user-attachments/assets/cf2f0a4c-036c-4b7f-bc41-ce3253437deb)
-![234](https://github.com/user-attachments/assets/2475090d-bbc3-4865-bf49-b619021d3f0c)
+Example:
+```bash
+python feature_extraction/protbert_embeddings.py --input data/Alpha.fasta --output features/protbert_alpha.npy
+python classification/train_xgboost.py --features features/protbert_alpha.npy --labels data/labels.csv
+```
 
+## Repository Structure
+
+```
+data/                  # FASTA files and reference sequences
+feature_extraction/    # Scripts for each feature extraction approach
+classification/        # XGBoost training, hyperparameter tuning, evaluation
+analysis/              # Exploratory analysis, plotting scripts
+results/               # Output metrics, tables, and figures
+jsd_heatmap.png        # Jensen–Shannon divergence heatmap (see report)
+hamming_distribution.png # Hamming distance histogram
+variant_distance_matrix.png # Per-variant Hamming distance matrix
+README.md              # This file
+report.pdf             # Full paper (compiled from LaTeX)
+```
+
+## Figures
+
+- **jsd_heatmap.png**: Visualizes average Jensen–Shannon divergence between variants.
+- **hamming_distribution.png**: Distribution of normalized Hamming distances, within and between variants.
+- **variant_distance_matrix.png**: Matrix of mean Hamming distances between variant pairs.
+
+## Contact
+
+For questions or issues, please open an [issue](https://github.com/ranbirdaefler/Covid19-BERT/issues) or contact Florian Ranbir Vaid Daelfer.
+
+---
+
+**This repository provides a reproducible benchmark for evaluating feature extraction approaches on large-scale SARS-CoV-2 variant classification. Contributions and suggestions are welcome!**
