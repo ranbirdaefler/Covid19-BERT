@@ -1,10 +1,3 @@
-#!/usr/bin/env python
-"""
-pairwise_hamming.py
--------------------
-Compute and plot the distribution of pairwise Hamming distances
-within and between SARS-CoV-2 lineages.
-"""
 
 import os
 import glob
@@ -19,6 +12,7 @@ import seaborn as sns
 
 
 # --------------------------- CONFIG ---------------------------------
+#below you must update the FASTA_DIR
 FASTA_DIR   = "/Users/floriandaefler/Desktop/deep and reinforcement/project/data"        # folder containing *.fasta
 OUT_PNG     = "figs/hamming_distribution.png"
 MAX_PER_VAR = 1000          # down-sample each lineage to this many sequences
