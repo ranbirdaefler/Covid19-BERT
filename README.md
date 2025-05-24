@@ -6,11 +6,11 @@ This repository contains code and resources for the project:
 > *Florian Ranbir Vaid Daelfer, Emilija Milanovic, Changchen Yu*  
 > Bocconi University Deep Learning and Reinforcement Learning
 
-
 ## Additional files that were too big to push 
 https://limewire.com/d/swG4V#Nu8ABipUhL
 
-This link leads to a download of the embeddings garnered via ProtBERT (as a .npy file) and the labels associated for classification. Additionally you can also find all the .fasta files (the ones from kaggle dataset) and the static embedding .npys files as well. I had to upload this seperately from github as they are too big to upload to github. If this link doesn't work please contact us v.i.a the methods you can find below and we will update it
+This link leads to a download of the embeddings garnered via ProtBERT (as a .npy file) and the labels associated for classification. Additionally you can also find all the .fasta files (the ones from Kaggle) and the labels in CSV format.
+
 ## Overview
 
 This project systematically compares three approaches to representing SARS-CoV-2 spike protein sequences for the task of variant classification:
@@ -33,6 +33,49 @@ All approaches are evaluated on a large, diverse dataset of 261,042 spike protei
 - **Classes**: Alpha, Beta, Gamma, Delta, Omicron, Others (catch-all).
 - **Sequence length**: All sequences are aligned to the Wuhan reference (NCBI accession YP_009724390.1).
 - **Ambiguity Handling**: Non-standard residues (X, B, Z, J) are ignored during feature computation.
+
+## Repository Structure
+
+```
+README.md
+requirements.txt
+data/
+    alpha.fasta
+    beta.fasta
+    delta.fasta
+    gamma.fasta
+    omicron.fasta
+    others.fasta
+    reference.fasta
+dataloader/
+    compute_bert_embeddings.py
+    extract_static_features.py
+    loader.py
+    static_feature_extractor.py
+e.d.a/
+    entropy_check.py
+    hamming.py
+    variant_distance_matrix.py
+models/
+    cv.py
+```
+
+### Directory/Script Descriptions
+
+- **data/**: Contains FASTA files for each variant and the Wuhan reference.
+- **dataloader/**: Scripts for loading data and extracting features:
+  - `compute_bert_embeddings.py`: Generate BERT-based embeddings for spike sequences.
+  - `extract_static_features.py`, `static_feature_extractor.py`: Extract AAindex-based features (aggregate and positional).
+  - `loader.py`: Data loading utilities.
+- **e.d.a/**: Exploratory Data Analysis scripts:
+  - `entropy_check.py`: Sequence entropy analysis.
+  - `hamming.py`: Hamming distance statistics.
+  - `variant_distance_matrix.py`: Compute and visualize distance matrices between variants.
+- **models/**: Model training and evaluation.
+  - `cv.py`: Cross-validation, model selection, and evaluation routines.
+- **requirements.txt**: Python dependencies for running the project.
+
+> **Note:** The original structure referenced `feature_extraction/`, `classification/`, and `analysis/` directories, but the current repository layout consolidates these into `dataloader/`, `models/`, and `e.d.a/` respectively. Adjust your script paths accordingly.
 
 ## Feature Extraction Approaches
 
@@ -78,48 +121,33 @@ All approaches are evaluated on a large, diverse dataset of 261,042 spike protei
 - XGBoost
 - NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn
 
-Install dependencies (example):
+Install dependencies:
 ```bash
-pip install torch transformers xgboost numpy pandas scikit-learn matplotlib seaborn
+pip install -r requirements.txt
 ```
 
 ### Data
 
-- Download spike sequences from [Kaggle](https://www.kaggle.com/datasets/edumath/sars-cov-2-spike-sequences) and place in a `data/` directory.
-- The Wuhan reference sequence is available from [NCBI](https://www.ncbi.nlm.nih.gov/protein/YP_009724390.1?report=fasta).
+- Place the provided FASTA files in the `data/` directory.
+- The Wuhan reference sequence is included as `reference.fasta`.
 
 ### Running Feature Extraction and Classification
 
 1. **Feature Extraction**:  
-   - `feature_extraction/aggregate_features.py`  
-   - `feature_extraction/positional_features.py`  
-   - `feature_extraction/protbert_embeddings.py`
+   - ProtBERT embeddings: `dataloader/compute_bert_embeddings.py`
+   - AAindex features: `dataloader/extract_static_features.py` or `dataloader/static_feature_extractor.py`
 
-2. **Classification**:  
-   - `classification/train_xgboost.py` (handles hyperparameter tuning and cross-validation for each feature set)
+2. **Model Training & Cross-Validation**:  
+   - Use `models/cv.py` for XGBoost training, hyperparameter tuning, and evaluation.
 
-3. **Analysis and Visualization**:  
-   - `analysis/` contains scripts for exploratory analysis, performance metrics, and generating plots.
+3. **Exploratory Data Analysis**:  
+   - Scripts in `e.d.a/` allow for entropy analysis, hamming distance calculations, and variant distance matrix visualization.
 
-Example:
+#### Example
 ```bash
-python feature_extraction/protbert_embeddings.py --input data/Alpha.fasta --output features/protbert_alpha.npy
-python classification/train_xgboost.py --features features/protbert_alpha.npy --labels data/labels.csv
-```
-
-## Repository Structure
-
-```
-data/                  # FASTA files and reference sequences
-feature_extraction/    # Scripts for each feature extraction approach
-classification/        # XGBoost training, hyperparameter tuning, evaluation
-analysis/              # Exploratory analysis, plotting scripts
-results/               # Output metrics, tables, and figures
-jsd_heatmap.png        # Jensen–Shannon divergence heatmap (see report)
-hamming_distribution.png # Hamming distance histogram
-variant_distance_matrix.png # Per-variant Hamming distance matrix
-README.md              # This file
-report.pdf             # Full paper (compiled from LaTeX)
+python dataloader/compute_bert_embeddings.py --input data/alpha.fasta --output features/protbert_alpha.npy
+python dataloader/extract_static_features.py --input data/alpha.fasta --output features/aaindex_alpha.npy
+python models/cv.py --features features/protbert_alpha.npy --labels data/labels.csv
 ```
 
 ## Figures
