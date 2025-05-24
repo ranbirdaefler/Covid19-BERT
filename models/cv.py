@@ -421,10 +421,6 @@ elif p_t_macro < 0.05:
 else:
     conclusion = "No significant performance difference between ProtBERT and AAindex approaches."
 
-print(f"  {conclusion}")
-print(f"  Hyperparameter optimization improved results for both approaches.")
-print(f"  Confusion matrices reveal class-specific performance patterns.")
-
 print("\nFiles generated:")
 print("  - confusion_matrices_comparison.png")
 print("  - confusion_matrices_comparison.pdf")
