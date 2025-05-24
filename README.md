@@ -63,7 +63,7 @@ models/
 ### Directory/Script Descriptions
 
 - **data/**: Contains FASTA files for each variant and the Wuhan reference.
-- **dataloader/**: Scripts for loading data and extracting features:
+- **dataloader/**: Scripts for loading data and extracting features(You can download the generated data via the first link in the readme):
   - `compute_bert_embeddings.py`: Generate BERT-based embeddings for spike sequences.
   - `extract_static_features.py`, `static_feature_extractor.py`: Extract AAindex-based features (aggregate and positional).
   - `loader.py`: Data loading utilities.
