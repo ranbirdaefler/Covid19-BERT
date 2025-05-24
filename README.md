@@ -1,4 +1,4 @@
-# Evaluating Protein Language Models Against Traditional and Positional Features for SARS-CoV-2 Variant Classification
+# Evaluating Protein Language Models Against Biochemical Property Features for SARS-CoV-2 Variant Classification
 
 This repository contains code and resources for the project:
 
