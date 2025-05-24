@@ -21,12 +21,6 @@ This project systematically compares three approaches to representing SARS-CoV-2
 
 All approaches are evaluated on a large, diverse dataset of 261,042 spike protein sequences spanning six WHO lineages, using XGBoost classifiers with method-specific hyperparameter optimization and rigorous cross-validation.
 
-## Key Findings
-
-- **Positional encoding of mutations** outperforms both simple baselines and ProtBERT embeddings, achieving the highest macro-F1 (0.967) and accuracy (99.0%).
-- **ProtBERT embeddings** significantly outperform the simple baseline, offering a strong "off-the-shelf" solution with minimal domain expertise required.
-- **Carefully engineered features** still provide meaningful performance gains, especially for minority variant detection, despite advances in protein language models.
-
 ## Dataset
 
 - **Source**: [Kaggle SARS-CoV-2 Spike Protein Sequences](https://www.kaggle.com/datasets/edumath/sars-cov-2-spike-sequences) (mirroring GISAID records).
@@ -54,7 +48,7 @@ models/
 
 ### Directory/Script Descriptions
 
-- **dataloader/**: Scripts for loading data and extracting features(You can download the generated data via the first link in the readme):
+- **dataloader/**: Scripts for loading data and extracting features(You can download the generated data via the first link in the readme, position then in respective folders in your directory):
   - `compute_bert_embeddings.py`: Generate BERT-based embeddings for spike sequences.
   - `extract_static_features.py`, `static_feature_extractor.py`: Extract AAindex-based features (aggregate and positional).
   - `loader.py`: Data loading utilities.
