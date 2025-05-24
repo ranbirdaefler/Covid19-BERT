@@ -1,12 +1,4 @@
-#!/usr/bin/env python
-"""
-variant_jsd.py
---------------
-Info-theoretic comparison of SARS-CoV-2 variants.
-Outputs:
-  figs/jsd_heatmap.png   – clustered heat-map of mean JSD
-  figs/jsd_mds.png       – 2-D metric-MDS embedding of the JSD matrix
-"""
+
 
 import os, glob, itertools
 from collections import Counter, defaultdict
@@ -20,11 +12,13 @@ from sklearn.manifold import MDS
 
 # ------------------------------------------------------------
 # CONFIGURATION
+#below you must update the data_dir and reference_path to point to the folder with the .fasta files for the former and the reference wuhan path for the latter
 # ------------------------------------------------------------
+
 FASTA_DIR         = "/Users/floriandaefler/Desktop/deep and reinforcement/project/data"     # folder containing alpha.fasta, beta.fasta, ...
-MAX_PER_VARIANT   = 1000       # down-sample cap   (None = use all)
-ALPHABET          = list("ACDEFGHIKLMNPQRSTVWY")  # canonical 20 AAs
-FIG_DIR           = "/Users/floriandaefler/Desktop/deep and reinforcement/project/figs"
+MAX_PER_VARIANT   = 1000       
+ALPHABET          = list("ACDEFGHIKLMNPQRSTVWY") 
+FIG_DIR           = "/Users/floriandaefler/Desktop/deep and reinforcement/project/figs" #OUTPUT FOLDER
 os.makedirs(FIG_DIR, exist_ok=True)
 rng = np.random.default_rng(0)
 # ------------------------------------------------------------
