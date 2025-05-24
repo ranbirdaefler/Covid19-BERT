@@ -16,7 +16,7 @@ aaindex_hydrophobicity = {
 }
 
 def main():
-    # Initialize the loader
+    # Initialize the loader (below you must update the data_dir and reference_path to point to the folder with the .fasta files for the former and the reference wuhan path for the latter)
     loader = SpikeMultiDataLoaderWithReference(
         data_dir=r'C:\Users\avsd8\OneDrive\Desktop\covid19\project\data',
         reference_path=r'C:\Users\avsd8\OneDrive\Desktop\covid19\project\data\reference.fasta'
