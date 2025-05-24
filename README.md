@@ -63,18 +63,6 @@ All approaches are evaluated on a large, diverse dataset of 261,042 spike protei
 - **ProtBERT** is a strong, easy-to-deploy baseline, especially useful for "Others" or ambiguous classes.
 - **Aggregate baseline** is outperformed by both, but still achieves high absolute performance.
 
-## Biological Insights
-
-- **Variant separation**: WHO lineages form well-separated clusters by both information-theoretic (Jensen–Shannon divergence) and sequence-level (Hamming distance) metrics.
-- **Mutation location matters**: Explicitly encoding where mutations occur yields superior results, showing domain knowledge is still valuable.
-- **Protein language models**: Capture general sequence features and enable rapid, domain-agnostic deployment; further fine-tuning may close the remaining performance gap.
-
-## Implications
-
-- **Quick deployment**: ProtBERT embeddings are highly effective for rapid surveillance with minimal setup.
-- **Optimal accuracy**: Invest in positional feature engineering for highest accuracy, especially for rare or emerging variants.
-- **Future work**: Fine-tuning protein language models on targeted viral classification tasks may bridge the performance gap with engineered features.
-
 ## Usage
 
 ### Requirements
