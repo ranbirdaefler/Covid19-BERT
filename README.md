@@ -39,14 +39,6 @@ All approaches are evaluated on a large, diverse dataset of 261,042 spike protei
 ```
 README.md
 requirements.txt
-data/
-    alpha.fasta
-    beta.fasta
-    delta.fasta
-    gamma.fasta
-    omicron.fasta
-    others.fasta
-    reference.fasta
 dataloader/
     compute_bert_embeddings.py
     extract_static_features.py
@@ -62,7 +54,6 @@ models/
 
 ### Directory/Script Descriptions
 
-- **data/**: Contains FASTA files for each variant and the Wuhan reference.
 - **dataloader/**: Scripts for loading data and extracting features(You can download the generated data via the first link in the readme):
   - `compute_bert_embeddings.py`: Generate BERT-based embeddings for spike sequences.
   - `extract_static_features.py`, `static_feature_extractor.py`: Extract AAindex-based features (aggregate and positional).
@@ -75,7 +66,6 @@ models/
   - `cv.py`: Cross-validation, model selection, and evaluation routines.
 - **requirements.txt**: Python dependencies for running the project.
 
-> **Note:** The original structure referenced `feature_extraction/`, `classification/`, and `analysis/` directories, but the current repository layout consolidates these into `dataloader/`, `models/`, and `e.d.a/` respectively. Adjust your script paths accordingly.
 
 ## Feature Extraction Approaches
 
@@ -128,17 +118,15 @@ pip install -r requirements.txt
 
 ### Data
 
-- Place the provided FASTA files in the `data/` directory.
-- The Wuhan reference sequence is included as `reference.fasta`.
-
+- All data can be downloaded via the first link in the read.me or via the kaggle dataset
 ### Running Feature Extraction and Classification
 
 1. **Feature Extraction**:  
    - ProtBERT embeddings: `dataloader/compute_bert_embeddings.py`
-   - AAindex features: `dataloader/extract_static_features.py` or `dataloader/static_feature_extractor.py`
+   - AAindex features: `dataloader/extract_static_features.py` and `dataloader/static_feature_extractor.py`
 
 2. **Model Training & Cross-Validation**:  
-   - Use `models/cv.py` for XGBoost training, hyperparameter tuning, and evaluation.
+   - Use `models/cv.py` for XGBoost training, hyperparameter tuning, statistical tests, and evaluation.
 
 3. **Exploratory Data Analysis**:  
    - Scripts in `e.d.a/` allow for entropy analysis, hamming distance calculations, and variant distance matrix visualization.
