@@ -7,7 +7,7 @@ This repository contains code and resources for the project:
 > Bocconi University Deep Learning and Reinforcement Learning
 
 
-## Additional files that were too big to upload to github
+## Additional files that were too big to push 
 https://limewire.com/d/swG4V#Nu8ABipUhL
 
 This link leads to a download of the embeddings garnered via ProtBERT (as a .npy file) and the labels associated for classification. Additionally you can also find all the .fasta files (the ones from kaggle dataset) and the static embedding .npys files as well. I had to upload this seperately from github as they are too big to upload to github. If this link doesn't work please contact us v.i.a the methods you can find below and we will update it
