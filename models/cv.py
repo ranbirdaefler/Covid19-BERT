@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 """
-cv_stats_with_tuning.py
 -----------------------
 Rigorous comparison of AAindex vs. ProtBERT Δ-embeddings
 with minimal hyperparameter tuning and confusion matrix visualization.
@@ -26,7 +25,7 @@ from itertools import product
 import time
 
 # --------------------------------------------------
-# 2. File paths  (EDIT THESE)
+# 2. File paths  (EDIT THESE TO POINT TO THE PATH WHERE YOU SAVE THE REPRESENTATIONS(FIND DOWNLOAD LINK ON GITHUB README)
 # --------------------------------------------------
 STATIC_X_FP = r"C:\Users\avsd8\OneDrive\Desktop\covid19\project\files_to_send\positional_vectors.npy"
 STATIC_Y_FP = r"C:\Users\avsd8\OneDrive\Desktop\covid19\project\files_to_send\labels.npy"
