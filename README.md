@@ -131,18 +131,6 @@ pip install -r requirements.txt
 3. **Exploratory Data Analysis**:  
    - Scripts in `e.d.a/` allow for entropy analysis, hamming distance calculations, and variant distance matrix visualization.
 
-#### Example
-```bash
-python dataloader/compute_bert_embeddings.py --input data/alpha.fasta --output features/protbert_alpha.npy
-python dataloader/extract_static_features.py --input data/alpha.fasta --output features/aaindex_alpha.npy
-python models/cv.py --features features/protbert_alpha.npy --labels data/labels.csv
-```
-
-## Figures
-
-- **jsd_heatmap.png**: Visualizes average Jensen–Shannon divergence between variants.
-- **hamming_distribution.png**: Distribution of normalized Hamming distances, within and between variants.
-- **variant_distance_matrix.png**: Matrix of mean Hamming distances between variant pairs.
 
 ## Contact
 
