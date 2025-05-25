@@ -35,6 +35,7 @@ dataloader/
     extract_static_features.py
     loader.py
     static_feature_extractor.py
+    position_vector.py
 e.d.a/
     entropy_check.py
     hamming.py
@@ -47,7 +48,7 @@ models/
 
 - **dataloader/**: Scripts for loading data and extracting features(You can download the generated data via the first link in the readme, position then in respective folders in your directory):
   - `compute_bert_embeddings.py`: Generate BERT-based embeddings for spike sequences.
-  - `extract_static_features.py`, `static_feature_extractor.py`: Extract AAindex-based features (aggregate and positional).
+  - `extract_static_features.py`, `static_feature_extractor.py`, 'position_vector.py': Extract AAindex-based features (aggregate and positional).
   - `loader.py`: Data loading utilities.
 - **e.d.a/**: Exploratory Data Analysis scripts:
   - `entropy_check.py`: Sequence entropy analysis.
