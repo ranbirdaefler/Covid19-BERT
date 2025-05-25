@@ -22,7 +22,7 @@ if not torch.cuda.is_available():
 
 device = torch.device("cuda")
 gpu_name = torch.cuda.get_device_name(device)
-print(f"✅  Using GPU: {gpu_name}")
+print(f"Using GPU: {gpu_name}")
 
 # heuristically pick batch size
 vram_gb = torch.cuda.get_device_properties(device).total_memory / 2**30
@@ -74,4 +74,4 @@ with torch.no_grad():
 # ------------------------------------------------------------------ #
 np.save("bert_full_X.npy", emb.astype(np.float32))
 np.save("bert_full_y.npy", df.Label.to_numpy().astype("U"))
-print("✅  Saved bert_full_X.npy & bert_full_y.npy")
+print("Saved bert_full_X.npy & bert_full_y.npy")
