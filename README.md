@@ -24,9 +24,6 @@ All approaches are evaluated on a large, diverse dataset of 261,042 spike protei
 ## Dataset
 
 - **Source**: [Kaggle SARS-CoV-2 Spike Protein Sequences](https://www.kaggle.com/datasets/edumath/sars-cov-2-spike-sequences) (mirroring GISAID records).
-- **Classes**: Alpha, Beta, Gamma, Delta, Omicron, Others (catch-all).
-- **Sequence length**: All sequences are aligned to the Wuhan reference (NCBI accession YP_009724390.1).
-- **Ambiguity Handling**: Non-standard residues (X, B, Z, J) are ignored during feature computation.
 
 ## Repository Structure
 
