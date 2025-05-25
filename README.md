@@ -126,7 +126,7 @@ pip install -r requirements.txt
 
 ## Contact
 
-For questions or issues, please open an [issue](https://github.com/ranbirdaefler/Covid19-BERT/issues) or contact Florian Ranbir Vaid Daelfer.
+For questions or issues, please open an [issue](https://github.com/ranbirdaefler/Covid19-BERT/issues) or contact any of the contributors on the project.
 
 ---
 
