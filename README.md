@@ -116,7 +116,7 @@ pip install -r requirements.txt
 1. **Feature Extraction**:  
    - ProtBERT embeddings: `dataloader/compute_bert_embeddings.py`
    - AAindex features: `dataloader/extract_static_features.py` and `dataloader/static_feature_extractor.py` and 'dataloader/positional_vector.py'
-
+(See the .npy files and labels for what we got when we ran this)
 2. **Model Training & Cross-Validation**:  
    - Use `models/cv.py` for XGBoost training, hyperparameter tuning, statistical tests, and evaluation.
 
