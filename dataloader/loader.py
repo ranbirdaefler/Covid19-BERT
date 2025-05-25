@@ -55,7 +55,7 @@ class SpikeMultiDataLoaderWithReference:
         print(f"Train: {len(df_train)} | Val: {len(df_val)} | Test: {len(df_test)}")
         return df_train.reset_index(drop=True), df_val.reset_index(drop=True), df_test.reset_index(drop=True)
 
-below you must update the data_dir and reference_path to point to the folder with the .fasta files for the former and the reference wuhan path for the latter
+#below you must update the data_dir and reference_path to point to the folder with the .fasta files for the former and the reference wuhan path for the latter
 loader = SpikeMultiDataLoaderWithReference(
     r'C:\Users\avsd8\OneDrive\Desktop\covid19\project\data',
     r'C:\Users\avsd8\OneDrive\Desktop\covid19\project\data\reference.fasta'
