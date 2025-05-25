@@ -9,7 +9,7 @@ This repository contains code and resources for the project:
 ## Additional files that were too big to push 
 https://limewire.com/d/swG4V#Nu8ABipUhL
 
-This link leads to a download of the embeddings garnered via ProtBERT (as a .npy file) and the labels associated for classification. Additionally you can also find all the .fasta files (the ones from Kaggle)
+This link leads to a download of the embeddings generated via ProtBERT (as a .npy file) and the labels associated for classification. Additionally you can also find all the .fasta files (the ones from Kaggle) and the sparse embeddings for the per-site hydrophobicity index(also as a .npy file) with the associated labels
 
 ## Overview
 
